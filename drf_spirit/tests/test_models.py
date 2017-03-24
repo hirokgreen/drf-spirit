@@ -11,3 +11,9 @@ class CategoryTest(TestCase):
     def test_get(self):
         resp = self.client.get('/category/1/',)
         self.assertEqual(resp.status_code, 200)
+
+    def test_post(self):
+        resp = self.client.post(
+            '/category/', {'title': 'someone', 'slug': 'lol'}, format='json')
+        item = Category.objects.filter(title='someone').exists()
+        self.assertEqual(item, True)   
