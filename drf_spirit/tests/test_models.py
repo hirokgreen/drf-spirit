@@ -5,15 +5,15 @@ from drf_spirit.models import Category
 class CategoryTest(TestCase):
 
     def setUp(self):
-        Category.objects.create(title='Alice',)
+        Category.objects.create(title='alice',)
         self.client = APIClient()
 
     def test_get(self):
-        resp = self.client.get('/category/1/',)
+        resp = self.client.get('/category/alice/',)
         self.assertEqual(resp.status_code, 200)
 
     def test_post(self):
         resp = self.client.post(
-            '/category/', {'title': 'someone', 'slug': 'lol'}, format='json')
-        item = Category.objects.filter(title='someone').exists()
+            '/category/', {'title': 'someone', 'description': 'hello world'}, format='json')
+        item = Category.objects.filter(slug='someone').exists()
         self.assertEqual(item, True)   
