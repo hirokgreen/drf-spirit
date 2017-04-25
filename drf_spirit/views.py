@@ -2,7 +2,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, AllowAny
 
-from .filters import CommentFilter
+from .filters import TopicFilter, CommentFilter
 from .models import Topic, Category, Comment
 from .permissions import IsOwnerOrReadOnly
 from .serializers import TopicSerializer, CategorySerializer, CommentSerializer
@@ -11,6 +11,8 @@ from .serializers import TopicSerializer, CategorySerializer, CommentSerializer
 class TopicList(generics.ListCreateAPIView):
     serializer_class = TopicSerializer
     queryset = Topic.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = TopicFilter
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def perform_create(self, serializer):
@@ -22,7 +24,7 @@ class TopicDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Topic.objects.all()
     permission_classes = (IsOwnerOrReadOnly,)
     lookup_field = 'slug'
-    
+
 
 class TopicCommentList(generics.ListAPIView):
     serializer_class = CommentSerializer

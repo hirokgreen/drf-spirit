@@ -1,6 +1,6 @@
 from django_filters.rest_framework import CharFilter, FilterSet
 
-from .models import Comment
+from .models import Comment, Topic 
 
 
 class CommentFilter(FilterSet):
@@ -14,3 +14,13 @@ class CommentFilter(FilterSet):
     class Meta:
         model = Comment
         fields = ['topic', 'user']
+
+
+class TopicFilter(FilterSet):
+    """
+    A filter class for filtering Topics
+    """
+
+    class Meta:
+        model = Topic
+        fields = ['is_removed', 'is_archived']
